@@ -112,6 +112,22 @@ section{padding:clamp(56px,9vw,110px) 0}
 .card .visual{aspect-ratio:16/10;background:#3a3a3a;display:grid;place-items:center;margin-bottom:14px;border:1px solid #444}
 .card .visual svg{width:46%;height:auto;stroke:var(--on-dark-muted);fill:none;stroke-width:1.5}
 .card p{color:var(--on-dark-muted);font-size:14.5px;text-align:justify;margin:0}
+.card .visual.live{position:relative;display:block;overflow:hidden;background:#1d2124;border-color:#4a4f54}
+.visual.live canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#sim-gesture{cursor:crosshair;touch-action:pan-y}
+.hud{position:absolute;left:10px;right:10px;display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--on-dark-muted);pointer-events:none;white-space:nowrap}
+.hud.top{top:7px}.hud.bot{bottom:7px}
+.hud b{color:var(--on-dark)}
+.hud .warn{color:#e0a458}
+.hud .dot::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#3ddc84;margin-right:6px;vertical-align:1px;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.batt{display:inline-block;width:22px;height:10px;border:1px solid var(--on-dark-muted);padding:1px;margin-right:6px;vertical-align:-1px}
+.batt i{display:block;height:100%;width:93%;background:#3ddc84}
+.card .hint{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--accent);margin:-6px 0 12px}
+@media (prefers-reduced-motion:reduce){.hud .dot::before{animation:none}#sim-gesture{cursor:default}.card .hint{visibility:hidden}}
+.entry-logo{display:flex;gap:18px;align-items:flex-start}
+.entry-logo>div{flex:1;min-width:0}
+.edu-logo{flex:none;width:64px;height:64px;background:#fff;border-radius:10px;padding:6px;object-fit:contain}
 
 /* SKILLS */
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
@@ -150,9 +166,10 @@ section{padding:clamp(56px,9vw,110px) 0}
   .langs{grid-template-columns:repeat(2,1fr)}
   .contact .rows{grid-template-columns:1fr}
 }
+@media (max-width:760px){.grid3{grid-template-columns:1fr}}
 @media (max-width:560px){
   .hero nav{display:none}
-  .grid3{grid-template-columns:1fr}
+  .edu-logo{width:52px;height:52px;padding:5px}
   .card h3{min-height:0}
   .entry .date{float:none;display:block;margin:0 0 2px}
 }
@@ -208,11 +225,14 @@ section{padding:clamp(56px,9vw,110px) 0}
       <p class="lead">My degree in mechatronics, robotics and automation gave me a mix of mechanical, electronic and software skills. That combination is what AMR validation needs every day.</p>
     </div>
     <div>
-      <div class="entry">
-        <span class="date">2019 – 2023</span>
-        <h3>B.E. Mechatronics Engineering</h3>
-        <div class="where">RVS College of Engineering and Technology, Coimbatore · Anna University, Chennai</div>
-        <p>First Class · CGPA 7.54 / 10 · Passed April 2023</p>
+      <div class="entry entry-logo">
+        <img class="edu-logo" src="anna-university-emblem.png" width="64" height="64" alt="Anna University emblem">
+        <div>
+          <span class="date">2019 – 2023</span>
+          <h3>B.E. Mechatronics Engineering</h3>
+          <div class="where">RVS College of Engineering and Technology, Coimbatore · Anna University, Chennai</div>
+          <p>First Class · CGPA 7.54 / 10 · Passed April 2023</p>
+        </div>
       </div>
       <div class="entry">
         <span class="date">2017 – 2019</span>
@@ -291,13 +311,23 @@ section{padding:clamp(56px,9vw,110px) 0}
       <article class="card">
         <div class="yr">Jan – Apr 2023</div>
         <h3>Hand Gesture Control Robot: Arduino Nano</h3>
-        <div class="visual" aria-hidden="true"><svg viewBox="0 0 100 60"><path d="M30 44 V22 a3 3 0 0 1 6 0 V30 M36 30 V16 a3 3 0 0 1 6 0 V30 M42 30 V18 a3 3 0 0 1 6 0 V32 M48 32 V24 a3 3 0 0 1 6 0 V40 Q54 52 42 52 H36 Q30 52 30 44"/><path d="M66 22 Q74 30 66 38 M72 16 Q84 30 72 44"/></svg></div>
+        <div class="visual live">
+          <canvas id="sim-gesture" role="img" aria-label="Live demo: a hand with an accelerometer tilts, and the robot drives in the same direction"></canvas>
+          <div class="hud top"><span class="dot">Live · RF link</span><span id="g-mode">Auto demo</span></div>
+          <div class="hud bot"><span id="g-acc">ax +0.00g · ay +0.00g</span><span id="g-cmd">CMD → <b>STOP</b></span></div>
+        </div>
+        <div class="hint">Hover or tap the demo to steer it yourself</div>
         <p>Built a real-time gesture-controlled robot with an Arduino Nano and accelerometer-based recognition. It turns wireless hand movements into navigation commands.</p>
       </article>
       <article class="card">
         <div class="yr">2022</div>
         <h3>IoT Solar Autonomous Grass Cutter</h3>
-        <div class="visual" aria-hidden="true"><svg viewBox="0 0 100 60"><circle cx="78" cy="14" r="7"/><path d="M78 2 V4 M78 24 V26 M66 14 H68 M88 14 H90"/><rect x="18" y="26" width="44" height="16" rx="2"/><path d="M22 26 L30 16 H50 L58 26"/><circle cx="28" cy="46" r="5"/><circle cx="52" cy="46" r="5"/><path d="M6 54 H94"/></svg></div>
+        <div class="visual live">
+          <canvas id="sim-mower" role="img" aria-label="Live demo: a solar mower cuts a lawn row by row, steers around a tree and a rock, then returns to its dock to charge"></canvas>
+          <div class="hud top"><span class="dot">Live · IoT dashboard</span><span id="m-cut">Cut 0%</span></div>
+          <div class="hud bot"><span><span class="batt"><i id="m-bar"></i></span><span id="m-bat">Bat 93%</span></span><span id="m-status">Mowing</span></div>
+        </div>
+        <div class="hint">Live telemetry, as on the cloud dashboard</div>
         <p>Built a solar-powered autonomous mower with IoT remote monitoring, obstacle-avoidance sensors and a cloud dashboard that shows its status in real time.</p>
       </article>
     </div>
@@ -375,5 +405,294 @@ section{padding:clamp(56px,9vw,110px) 0}
     </g>
   </defs>
 </svg>
+<script>
+/* Live project demos: gesture-controlled robot and solar mower. Pause when off screen; static frame for reduced motion. */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ACC = '#72a4b1', MUTED = '#bdbdbd', INK = '#f2f2f2';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const angDiff = (a, b) => Math.atan2(Math.sin(a - b), Math.cos(a - b));
+  const fmt = v => { const s = Math.abs(v).toFixed(2); return (v < 0 && +s ? '−' : '+') + s; };
+  function rr(c, x, y, w, h, r) {
+    c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+  }
+
+  function runSim(canvas, s) {
+    const ctx = canvas.getContext('2d');
+    let w = 0, h = 0, t = 0, last = 0, raf = 0, running = false, visible = false;
+    const draw = () => { if (w) s.draw(ctx, w, h, t); };
+    function size() {
+      const r = canvas.getBoundingClientRect(); if (!r.width) return;
+      const d = Math.min(2, window.devicePixelRatio || 1);
+      canvas.width = Math.round(r.width * d); canvas.height = Math.round(r.height * d);
+      ctx.setTransform(d, 0, 0, d, 0, 0); w = r.width; h = r.height; s.resize(w, h); draw();
+    }
+    function frame(now) {
+      const dt = Math.min(0.05, (now - last) / 1000); last = now; t += dt;
+      s.step(dt, t); draw(); raf = requestAnimationFrame(frame);
+    }
+    function update() {
+      const go = visible && !document.hidden && !reduce;
+      if (go && !running) { running = true; last = performance.now(); raf = requestAnimationFrame(frame); }
+      else if (!go && running) { running = false; cancelAnimationFrame(raf); }
+    }
+    size();
+    new ResizeObserver(size).observe(canvas);
+    new IntersectionObserver(e => { visible = e[e.length - 1].isIntersecting; update(); }).observe(canvas);
+    document.addEventListener('visibilitychange', update);
+    if (reduce) { for (let i = 0; i < s.prime; i++) { t += 1 / 30; s.step(1 / 30, t); } draw(); }
+  }
+
+  /* 1. Hand gesture robot: accelerometer tilt -> wireless command -> robot motion */
+  const gc = document.getElementById('sim-gesture');
+  if (gc) {
+    const hMode = document.getElementById('g-mode'), hAcc = document.getElementById('g-acc'), hCmd = document.getElementById('g-cmd');
+    const A = { x: 0, y: 0, w: 0, h: 0 };
+    const bot = { x: 0, y: 0, th: -Math.PI / 2 }, tilt = { p: 0, r: 0 }, tgt = { p: 0, r: 0 }, wp = { x: 0, y: 0 };
+    let L = 0, inside = false, userT = 0, user = false, pauseT = 0, backT = 0, turning = false;
+    let trail = [], trailT = 0, hudT = 0, inited = false;
+    const cmdOf = (p, r) => Math.abs(p) < .3 && Math.abs(r) < .3 ? 'STOP'
+      : Math.abs(p) >= Math.abs(r) ? (p > 0 ? 'FORWARD' : 'BACK') : (r < 0 ? 'LEFT' : 'RIGHT');
+    const newWp = () => {
+      const m = 22;
+      for (let i = 0; i < 20; i++) {
+        wp.x = m + Math.random() * (A.w - 2 * m); wp.y = m + Math.random() * (A.h - 2 * m);
+        if (Math.hypot(wp.x - bot.x, wp.y - bot.y) > A.w * .3) break;
+      }
+    };
+    function setUser(e) {
+      const r = gc.getBoundingClientRect();
+      tgt.r = clamp(((e.clientX - r.left) / r.width * 2 - 1) * 1.5, -1, 1);
+      tgt.p = clamp(-((e.clientY - r.top) / r.height * 2 - 1) * 1.5, -1, 1);
+      userT = 2;
+    }
+    gc.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') inside = true; });
+    gc.addEventListener('pointerleave', () => { inside = false; userT = 0; tgt.p = 0; tgt.r = 0; });
+    gc.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || e.buttons) setUser(e); });
+    gc.addEventListener('pointerdown', setUser);
+
+    runSim(gc, {
+      prime: 45,
+      resize(w, h) {
+        L = w * .36;
+        const n = { x: L + 12, y: 28, w: w - L - 24, h: h - 56 };
+        if (inited && A.w) { const kx = n.w / A.w, ky = n.h / A.h; bot.x *= kx; bot.y *= ky; wp.x *= kx; wp.y *= ky; trail = []; }
+        Object.assign(A, n);
+        if (!inited) { inited = true; bot.x = A.w * .5; bot.y = A.h * .7; newWp(); }
+      },
+      step(dt) {
+        userT -= dt; user = inside || userT > 0;
+        if (!user) {
+          if (pauseT > 0) {
+            pauseT -= dt; tgt.p = 0; tgt.r = 0;
+            if (pauseT <= 0) { if (Math.random() < .35) backT = .9; else newWp(); }
+          } else if (backT > 0) {
+            backT -= dt; tgt.p = -.8; tgt.r = 0;
+            if (backT <= 0) newWp();
+          } else {
+            const dx = wp.x - bot.x, dy = wp.y - bot.y, err = angDiff(Math.atan2(dy, dx), bot.th);
+            if (Math.hypot(dx, dy) < 12) { pauseT = .8; turning = false; }
+            else {
+              if (Math.abs(err) > .45) turning = true; else if (Math.abs(err) < .1) turning = false;
+              tgt.p = turning ? 0 : .85; tgt.r = turning ? Math.sign(err) * .85 : 0;
+            }
+          }
+        }
+        const k = Math.min(1, dt * 7);
+        tilt.p += (tgt.p - tilt.p) * k; tilt.r += (tgt.r - tilt.r) * k;
+        const v = tilt.p * A.w * .28;
+        bot.th += tilt.r * 2.4 * dt;
+        bot.x = clamp(bot.x + Math.cos(bot.th) * v * dt, 12, A.w - 12);
+        bot.y = clamp(bot.y + Math.sin(bot.th) * v * dt, 12, A.h - 12);
+        trailT += dt;
+        if (trailT > .08) { trailT = 0; trail.push({ x: bot.x, y: bot.y }); if (trail.length > 45) trail.shift(); }
+        hudT -= dt;
+        if (hudT <= 0) {
+          hudT = .12;
+          hMode.textContent = user ? 'You are steering' : 'Auto demo';
+          hAcc.textContent = 'ax ' + fmt(tilt.p * .62) + 'g · ay ' + fmt(tilt.r * .62) + 'g';
+          hCmd.innerHTML = 'CMD → <b>' + cmdOf(tilt.p, tilt.r) + '</b>';
+        }
+      },
+      draw(c, w, h, t) {
+        c.clearRect(0, 0, w, h);
+        // arena grid
+        c.save(); c.translate(A.x, A.y);
+        c.strokeStyle = 'rgba(114,164,177,.13)'; c.lineWidth = 1; c.beginPath();
+        for (let x = 20; x < A.w; x += 20) { c.moveTo(x + .5, 0); c.lineTo(x + .5, A.h); }
+        for (let y = 20; y < A.h; y += 20) { c.moveTo(0, y + .5); c.lineTo(A.w, y + .5); }
+        c.stroke();
+        c.strokeStyle = 'rgba(255,255,255,.18)'; c.strokeRect(.5, .5, A.w - 1, A.h - 1);
+        if (!user) {
+          c.strokeStyle = 'rgba(114,164,177,.4)'; c.beginPath();
+          c.moveTo(wp.x - 4, wp.y - 4); c.lineTo(wp.x + 4, wp.y + 4); c.moveTo(wp.x + 4, wp.y - 4); c.lineTo(wp.x - 4, wp.y + 4); c.stroke();
+        }
+        trail.forEach((p, i) => { c.fillStyle = 'rgba(114,164,177,' + (i / trail.length * .55) + ')'; c.fillRect(p.x - 1, p.y - 1, 2, 2); });
+        c.restore();
+        // divider
+        c.setLineDash([3, 4]); c.strokeStyle = 'rgba(255,255,255,.15)'; c.beginPath(); c.moveTo(L + .5, 28); c.lineTo(L + .5, h - 28); c.stroke(); c.setLineDash([]);
+        // wireless pulses hand -> robot
+        const hx = L / 2, hy = h * .5, s = Math.min(L, h) / 105, bx = A.x + bot.x, by = A.y + bot.y;
+        for (let k = 0; k < 3; k++) {
+          const ph = (t * .9 + k / 3) % 1;
+          c.fillStyle = 'rgba(114,164,177,' + ((1 - ph) * .8) + ')';
+          c.beginPath(); c.arc(hx + (bx - hx) * ph, hy + (by - hy) * ph, 2, 0, 7); c.fill();
+        }
+        // hand with accelerometer
+        c.save(); c.translate(hx, hy - tilt.p * 7 * s); c.rotate(tilt.r * .5);
+        c.scale(s * (1 - .12 * Math.abs(tilt.r)), s * (1 - .28 * Math.abs(tilt.p)));
+        c.fillStyle = '#32383d'; c.strokeStyle = MUTED; c.lineWidth = 1.4 / s;
+        [[-13.5, 22], [-4.5, 27], [4.5, 25], [13.5, 19]].forEach(([x, fh]) => { rr(c, x - 3.8, -14 - fh, 7.6, fh + 6, 3.8); c.fill(); c.stroke(); });
+        c.save(); c.translate(-17, 6); c.rotate(-.75); rr(c, -4, -19, 8, 21, 4); c.fill(); c.stroke(); c.restore();
+        rr(c, -18, -16, 36, 38, 9); c.fill(); c.stroke();
+        rr(c, -6, -3, 12, 12, 2); c.fillStyle = ACC; c.fill();
+        c.restore();
+        // command arrow under the hand
+        const ang = { FORWARD: -Math.PI / 2, BACK: Math.PI / 2, LEFT: Math.PI, RIGHT: 0 }[cmdOf(tilt.p, tilt.r)];
+        c.save(); c.translate(hx, hy + 50 * s); c.fillStyle = ACC; c.strokeStyle = ACC; c.lineWidth = 2;
+        if (ang === undefined) { c.beginPath(); c.arc(0, 0, 3, 0, 7); c.fill(); }
+        else { c.rotate(ang); c.beginPath(); c.moveTo(-8, 0); c.lineTo(5, 0); c.stroke(); c.beginPath(); c.moveTo(10, 0); c.lineTo(3, -5); c.lineTo(3, 5); c.closePath(); c.fill(); }
+        c.restore();
+        // robot
+        const rs = clamp(A.h / 110, .8, 1.4);
+        c.save(); c.translate(bx, by); c.rotate(bot.th); c.scale(rs, rs);
+        c.fillStyle = '#0b0e10'; c.fillRect(-8, -11, 11, 4); c.fillRect(-8, 7, 11, 4);
+        rr(c, -11, -8, 22, 16, 4); c.fillStyle = '#3a4248'; c.fill(); c.lineWidth = 1.2; c.strokeStyle = INK; c.stroke();
+        c.fillStyle = ACC; c.beginPath(); c.arc(3, 0, 3.2, 0, 7); c.fill();
+        c.beginPath(); c.moveTo(14, 0); c.lineTo(9, -3.5); c.lineTo(9, 3.5); c.closePath(); c.fill();
+        c.restore();
+      }
+    });
+  }
+
+  /* 2. Solar mower: row-by-row coverage, obstacle detours, return to dock to charge */
+  const mc = document.getElementById('sim-mower');
+  if (mc) {
+    const hCut = document.getElementById('m-cut'), hBat = document.getElementById('m-bat'), hBar = document.getElementById('m-bar'), hSt = document.getElementById('m-status');
+    const C = 16, R = 9, key = (c, r) => r * C + c;
+    const blocked = new Set([key(10, 3), key(11, 3), key(10, 4), key(11, 4), key(4, 6)]);
+    const free = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) if (!blocked.has(key(c, r))) free.push(key(c, r));
+    const cut = new Uint8Array(C * R);
+    const tufts = Array.from({ length: C * R }, () => Array.from({ length: 6 }, Math.random));
+    const m = { x: .5, y: .5, th: 0 };
+    let cs = 10, ox = 0, oy = 0, route = [], idx = 0, phase = 'mow', chargeT = 0, bat = 93, solar = 14, hudT = 0, warn = false;
+    function bfs(a, b) {
+      if (a === b) return [];
+      const prev = new Int16Array(C * R).fill(-1); prev[a] = a;
+      const q = [a];
+      while (q.length) {
+        const k = q.shift(); if (k === b) break;
+        const c = k % C, r = (k / C) | 0;
+        for (const [dc, dr] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const nc = c + dc, nr = r + dr;
+          if (nc < 0 || nr < 0 || nc >= C || nr >= R) continue;
+          const n = key(nc, nr);
+          if (blocked.has(n) || prev[n] !== -1) continue;
+          prev[n] = k; q.push(n);
+        }
+      }
+      const p = []; for (let k = b; k !== a; k = prev[k]) p.push(k);
+      return p.reverse();
+    }
+    const here = () => key(Math.floor(m.x), Math.floor(m.y));
+    function mowRoute() {
+      route = []; let cur = here();
+      for (let r = 0; r < R; r++) for (let i = 0; i < C; i++) {
+        const k = key(r % 2 ? C - 1 - i : i, r);
+        if (blocked.has(k)) continue;
+        route.push(...bfs(cur, k)); cur = k;
+      }
+      idx = 0; phase = 'mow';
+    }
+    mowRoute();
+
+    runSim(mc, {
+      prime: 700,
+      resize(w, h) { cs = Math.min((w - 20) / C, (h - 56) / R); ox = (w - cs * C) / 2; oy = (h - cs * R) / 2; },
+      step(dt, t) {
+        solar = 13.6 + 2.2 * Math.sin(t * .35) + .5 * Math.sin(t * 2.3);
+        if (phase === 'charge') {
+          chargeT -= dt; bat = Math.min(100, bat + dt * 9);
+          if (chargeT <= 0) { cut.fill(0); mowRoute(); }
+        } else {
+          bat = clamp(bat + dt * (solar / 40 - .72), 15, 100);
+          if (idx >= route.length) {
+            if (phase === 'mow') { route = bfs(here(), key(0, 0)); idx = 0; phase = 'dock'; }
+            else { phase = 'charge'; chargeT = 2.8; }
+          } else {
+            const k = route[idx], tx = k % C + .5, ty = ((k / C) | 0) + .5;
+            const dx = tx - m.x, dy = ty - m.y, d = Math.hypot(dx, dy), sp = 2.7 * dt;
+            if (d > 1e-3) m.th += angDiff(Math.atan2(dy, dx), m.th) * Math.min(1, dt * 12);
+            if (d <= sp) { m.x = tx; m.y = ty; idx++; } else { m.x += dx / d * sp; m.y += dy / d * sp; }
+          }
+          if (phase === 'mow') {
+            const k = here(), c0 = k % C, r0 = (k / C) | 0; cut[k] = 1;
+            // grass under the tree and rock is drawn mown once a neighbouring cell is cut (visual only)
+            for (const [dc, dr] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+              const nc = c0 + dc, nr = r0 + dr;
+              if (nc >= 0 && nr >= 0 && nc < C && nr < R && blocked.has(key(nc, nr))) cut[key(nc, nr)] = 1;
+            }
+          }
+        }
+        warn = phase === 'mow' && (Math.hypot(m.x - 11, m.y - 4) < 1.9 || Math.hypot(m.x - 4.5, m.y - 6.5) < 1.3);
+        hudT -= dt;
+        if (hudT <= 0) {
+          hudT = .15;
+          let n = 0; for (const k of free) n += cut[k];
+          hCut.textContent = 'Cut ' + Math.round(n / free.length * 100) + '%';
+          hBat.textContent = 'Bat ' + Math.round(bat) + '% · Sun ' + solar.toFixed(1) + ' W';
+          hBar.style.width = bat + '%';
+          hSt.textContent = phase === 'charge' ? 'Charging at dock' : phase === 'dock' ? 'Lawn done · docking' : warn ? 'Obstacle · rerouting' : 'Mowing';
+          hSt.className = warn ? 'warn' : '';
+        }
+      },
+      draw(c, w, h, t) {
+        c.clearRect(0, 0, w, h);
+        c.save(); c.translate(ox, oy);
+        for (let r = 0; r < R; r++) for (let col = 0; col < C; col++) {
+          const k = key(col, r), x = col * cs, y = r * cs;
+          if (cut[k]) { c.fillStyle = r % 2 ? '#4b5b50' : '#445349'; c.fillRect(x, y, cs + .5, cs + .5); continue; }
+          c.fillStyle = '#2f3b33'; c.fillRect(x, y, cs + .5, cs + .5);
+          if (blocked.has(k)) continue;
+          const q = tufts[k]; c.strokeStyle = '#557060'; c.lineWidth = 1; c.beginPath();
+          for (let i = 0; i < 3; i++) {
+            const bx = x + (.15 + q[i * 2] * .7) * cs, by = y + (.4 + q[i * 2 + 1] * .5) * cs, sw = Math.sin(t * 2 + k + i) * .06 * cs;
+            c.moveTo(bx, by); c.lineTo(bx + sw, by - .28 * cs);
+          }
+          c.stroke();
+        }
+        c.strokeStyle = ACC; c.lineWidth = 1.5; c.strokeRect(2, 2, cs - 4, cs - 4);
+        if (phase !== 'charge' && idx < route.length) {
+          c.setLineDash([3, 3]); c.strokeStyle = 'rgba(114,164,177,.65)'; c.lineWidth = 1.2; c.beginPath(); c.moveTo(m.x * cs, m.y * cs);
+          for (let i = idx; i < Math.min(route.length, idx + 9); i++) { const k = route[i]; c.lineTo((k % C + .5) * cs, (((k / C) | 0) + .5) * cs); }
+          c.stroke(); c.setLineDash([]);
+        }
+        c.fillStyle = '#6d7379'; c.beginPath(); c.ellipse(4.5 * cs, 6.55 * cs, .36 * cs, .27 * cs, 0, 0, 7); c.fill();
+        c.fillStyle = '#1f2a23'; c.strokeStyle = '#6f8f78'; c.lineWidth = 1.2;
+        c.beginPath(); c.arc(11 * cs, 4 * cs, .95 * cs, 0, 7); c.fill(); c.stroke();
+        c.beginPath(); c.arc(10.65 * cs, 3.7 * cs, .42 * cs, 0, 7); c.stroke();
+        // mower
+        c.save(); c.translate(m.x * cs, m.y * cs); c.rotate(m.th);
+        const rgb = warn ? '224,164,88' : '114,164,177';
+        const g = c.createRadialGradient(0, 0, cs * .3, 0, 0, cs * 1.5);
+        g.addColorStop(0, 'rgba(' + rgb + ',.38)'); g.addColorStop(1, 'rgba(' + rgb + ',0)');
+        c.fillStyle = g; c.beginPath(); c.moveTo(cs * .3, 0); c.arc(0, 0, cs * 1.5, -.5, .5); c.closePath(); c.fill();
+        c.fillStyle = '#0b0e10';
+        [[-.32, -.41], [-.32, .31], [.12, -.41], [.12, .31]].forEach(([x, y]) => c.fillRect(x * cs, y * cs, .2 * cs, .1 * cs));
+        rr(c, -.4 * cs, -.32 * cs, .8 * cs, .64 * cs, .12 * cs); c.fillStyle = '#2b3136'; c.fill(); c.strokeStyle = INK; c.lineWidth = 1; c.stroke();
+        rr(c, -.3 * cs, -.22 * cs, .46 * cs, .44 * cs, .05 * cs);
+        c.fillStyle = phase === 'charge' ? 'rgba(114,164,177,' + (.55 + .3 * Math.sin(t * 6)) + ')' : '#1e3a48'; c.fill();
+        c.strokeStyle = 'rgba(114,164,177,.6)'; c.lineWidth = .8; c.beginPath();
+        c.moveTo(-.07 * cs, -.22 * cs); c.lineTo(-.07 * cs, .22 * cs); c.moveTo(-.3 * cs, 0); c.lineTo(.16 * cs, 0); c.stroke();
+        c.fillStyle = 'rgb(' + rgb + ')'; c.beginPath(); c.arc(.3 * cs, 0, .06 * cs, 0, 7); c.fill();
+        c.restore();
+        c.restore();
+      }
+    });
+  }
+})();
+</script>
 </body>
 </html>
