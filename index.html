@@ -703,8 +703,7 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
   const cv = document.createElement('canvas'); cv.className = 'shatter'; cv.setAttribute('aria-hidden', 'true');
   const ctx = cv.getContext('2d'), src = document.createElement('canvas'), sctx = src.getContext('2d', { willReadFrequently: true });
   const G = 900, HOLD = 3.2;                    // gravity px/s², intact pause s
-  // tile px: small squares on desktop, bigger on phones so each frame draws far fewer pieces
-  let T = matchMedia('(pointer:coarse)').matches || innerWidth < 700 ? 8 : 4;
+  let T = 4;                                    // tile px; grows if the device is too slow
   let slow = 0, frames = 0, prev = 0;
   let W = 0, H = 0, dpr = 1, tiles = [], fallEnd = 0, fillEnd = 0, t0 = 0, raf = 0, visible = true;
 
@@ -789,6 +788,8 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
     }).observe(frame);
     let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 150); });
   }
+  // phones and tablets: keep the still photo, no animation
+  if (matchMedia('(pointer:coarse)').matches || innerWidth < 700) return;
   img.complete && img.naturalWidth ? start() : img.addEventListener('load', start);
 })();
 </script>
