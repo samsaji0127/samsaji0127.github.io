@@ -53,16 +53,14 @@ section{padding:clamp(56px,9vw,110px) 0}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
 .chip{border:1px solid var(--ink);padding:6px 14px;border-radius:999px;font-size:14px;font-weight:500}
 
-/* EDUCATION split */
-.split{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);padding:0}
-.split .pic{background:#d9dcdf url(photo.jpg) 38% 18%/260% no-repeat;filter:grayscale(1);min-height:420px}
-.split .txt{padding:clamp(48px,7vw,96px) clamp(16px,5vw,64px)}
+/* EDUCATION */
+.edu{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:clamp(28px,5vw,72px)}
 .lead{font-style:italic;color:var(--on-dark-muted);max-width:560px;margin:0 0 30px}
 .entry{border-bottom:1px solid var(--rule);padding:20px 0}
 .entry:first-of-type{padding-top:0}
 .entry h3{font-size:17px;font-weight:700}
 .entry .where{font-weight:600;font-size:15px;color:var(--muted)}
-.dark .entry .where{color:var(--on-dark-muted)}
+.dark .entry .where,.dark .entry .date{color:var(--on-dark-muted)}
 .entry p,.entry ul{margin:6px 0 0;font-size:15px}
 .entry ul{padding-left:18px}
 .entry li{margin:4px 0}
@@ -78,7 +76,7 @@ section{padding:clamp(56px,9vw,110px) 0}
 
 /* PROJECTS */
 .projects h2.display{font-size:clamp(64px,12vw,150px);text-align:right;margin-bottom:56px}
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.grid3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;max-width:900px;margin-left:auto}
 .card .yr{font-size:22px;font-weight:300}
 .card h3{font-size:20px;font-weight:800;line-height:1.15;margin-bottom:14px;min-height:2.3em}
 .card .visual{aspect-ratio:16/10;background:#3a3a3a;display:grid;place-items:center;margin-bottom:14px;border:1px solid #444}
@@ -115,9 +113,7 @@ section{padding:clamp(56px,9vw,110px) 0}
 .cv-btn:hover{background:var(--accent)}
 
 @media (max-width:860px){
-  .split,.exp{grid-template-columns:1fr}
-  .split .pic{min-height:320px;background-size:200%}
-  .grid3{grid-template-columns:1fr 1fr}
+  .edu,.exp{grid-template-columns:1fr}
   .grid4{grid-template-columns:1fr 1fr}
   .langs{grid-template-columns:repeat(2,1fr)}
   .contact .rows{grid-template-columns:1fr}
@@ -166,23 +162,35 @@ section{padding:clamp(56px,9vw,110px) 0}
   </div>
 </section>
 
-<section class="dark split" id="education">
-  <div class="pic" role="img" aria-label="Portrait of Sam Saji"></div>
-  <div class="txt">
-    <h2 class="display">Education</h2>
-    <p class="lead">My degree in mechatronics, robotics and automation gave me a mix of mechanical, electronic and software skills. That combination is what AMR validation needs every day.</p>
-    <div class="entry">
-      <h3>B.E. Mechatronics, Robotics and Automation Engineering (2019–2023)</h3>
-      <div class="where">RVS College of Engineering and Technology, Coimbatore, India</div>
-      <p>CGPA: 7.54 / 10</p>
+<section class="dark" id="education">
+  <div class="wrap edu">
+    <div>
+      <h2 class="display">Education</h2>
+      <p class="lead">My degree in mechatronics, robotics and automation gave me a mix of mechanical, electronic and software skills. That combination is what AMR validation needs every day.</p>
     </div>
-    <div class="entry">
-      <h3>Certifications</h3>
-      <p>Industrial Automation · Machine Learning · Python for Data Science · Ethical Hacking</p>
-    </div>
-    <div class="entry">
-      <h3>Currently learning</h3>
-      <p>German (A2), to prepare for work in Europe</p>
+    <div>
+      <div class="entry">
+        <span class="date">2019 – 2023</span>
+        <h3>B.E. Mechatronics Engineering</h3>
+        <div class="where">RVS College of Engineering and Technology, Coimbatore · Anna University, Chennai</div>
+        <p>First Class · CGPA 7.54 / 10 · Passed April 2023</p>
+      </div>
+      <div class="entry">
+        <span class="date">2017 – 2019</span>
+        <h3>Higher Secondary Education (Plus Two), Science</h3>
+        <div class="where">Board of Higher Secondary Examinations, Government of Kerala</div>
+        <p>Physics, Chemistry, Mathematics, Computer Science · Passed March 2019</p>
+      </div>
+      <div class="entry">
+        <span class="date">2017</span>
+        <h3>Secondary School Leaving Certificate (SSLC)</h3>
+        <div class="where">St. Thomas High School, Thottumukkam, Kerala · Kerala Board of Public Examinations</div>
+        <p>A+ in English and Physics · Passed March 2017</p>
+      </div>
+      <div class="entry">
+        <h3>Currently learning</h3>
+        <p>German (A2), to prepare for work in Europe</p>
+      </div>
     </div>
   </div>
 </section>
@@ -242,25 +250,7 @@ section{padding:clamp(56px,9vw,110px) 0}
     <h2 class="display">Projects</h2>
     <div class="grid3">
       <article class="card">
-        <div class="yr">2025</div>
-        <h3>AMR Endurance &amp; Regression Validation</h3>
-        <div class="visual" aria-hidden="true"><svg viewBox="0 0 100 60"><path d="M5 50 L25 40 L40 44 L55 22 L70 28 L95 8"/><path d="M5 55 H95 M5 5 V55"/><circle cx="55" cy="22" r="3"/></svg></div>
-        <p>Designed the endurance and regression cycles for AMR firmware and software releases. These include 100+ hour runs that catch memory leaks and long-term failures before a build ships to client sites.</p>
-      </article>
-      <article class="card">
-        <div class="yr">2024</div>
-        <h3>Fleet Deployment at 10+ Warehouse Sites</h3>
-        <div class="visual" aria-hidden="true"><svg viewBox="0 0 100 60"><rect x="6" y="6" width="88" height="48"/><path d="M20 6 V40 M40 20 V54 M60 6 V40 M80 20 V54"/><circle cx="30" cy="46" r="3"/><circle cx="70" cy="14" r="3"/><path d="M30 46 Q50 30 70 14" stroke-dasharray="3 3"/></svg></div>
-        <p>Handled SLAM mapping, zone and waypoint setup, navigation tuning and UAT for AMR fleets across client warehouses. I also wrote Python scripts that turned robot logs into performance benchmarks.</p>
-      </article>
-      <article class="card">
-        <div class="yr">2024</div>
-        <h3>Hardware-in-the-Loop Jig Testing</h3>
-        <div class="visual" aria-hidden="true"><svg viewBox="0 0 100 60"><rect x="30" y="18" width="40" height="24" rx="2"/><path d="M38 18 V10 M50 18 V10 M62 18 V10 M38 42 V50 M50 42 V50 M62 42 V50 M30 30 H14 M70 30 H86"/><circle cx="10" cy="30" r="4"/><circle cx="90" cy="30" r="4"/></svg></div>
-        <p>Tested motor controllers, IMU, LiDAR modules, encoders and BMS on custom jigs. This isolates hardware faults from software faults before firmware sign-off.</p>
-      </article>
-      <article class="card">
-        <div class="yr">2023</div>
+        <div class="yr">Jan – Apr 2023</div>
         <h3>Hand Gesture Control Robot: Arduino Nano</h3>
         <div class="visual" aria-hidden="true"><svg viewBox="0 0 100 60"><path d="M30 44 V22 a3 3 0 0 1 6 0 V30 M36 30 V16 a3 3 0 0 1 6 0 V30 M42 30 V18 a3 3 0 0 1 6 0 V32 M48 32 V24 a3 3 0 0 1 6 0 V40 Q54 52 42 52 H36 Q30 52 30 44"/><path d="M66 22 Q74 30 66 38 M72 16 Q84 30 72 44"/></svg></div>
         <p>Built a real-time gesture-controlled robot with an Arduino Nano and accelerometer-based recognition. It turns wireless hand movements into navigation commands.</p>
@@ -270,12 +260,6 @@ section{padding:clamp(56px,9vw,110px) 0}
         <h3>IoT Solar Autonomous Grass Cutter</h3>
         <div class="visual" aria-hidden="true"><svg viewBox="0 0 100 60"><circle cx="78" cy="14" r="7"/><path d="M78 2 V4 M78 24 V26 M66 14 H68 M88 14 H90"/><rect x="18" y="26" width="44" height="16" rx="2"/><path d="M22 26 L30 16 H50 L58 26"/><circle cx="28" cy="46" r="5"/><circle cx="52" cy="46" r="5"/><path d="M6 54 H94"/></svg></div>
         <p>Built a solar-powered autonomous mower with IoT remote monitoring, obstacle-avoidance sensors and a cloud dashboard that shows its status in real time.</p>
-      </article>
-      <article class="card">
-        <div class="yr">2025</div>
-        <h3>Fleet Manager API Test Suites</h3>
-        <div class="visual" aria-hidden="true"><svg viewBox="0 0 100 60"><rect x="6" y="18" width="26" height="24" rx="2"/><rect x="68" y="18" width="26" height="24" rx="2"/><path d="M32 26 H68 M62 22 L68 26 L62 30 M68 36 H32 M38 32 L32 36 L38 40"/></svg></div>
-        <p>Combined automated and manual suites that check REST and WebSocket communication between the Fleet Manager and each vehicle for every software release.</p>
       </article>
     </div>
   </div>
