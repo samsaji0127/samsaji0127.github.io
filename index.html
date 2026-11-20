@@ -17,6 +17,7 @@
 <meta property="og:image:alt" content="Sam Saji portfolio: Robotics Validation Engineer">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://samsaji0127.github.io/og-v3.jpg">
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,100,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -131,7 +132,46 @@ section{padding:clamp(56px,9vw,110px) 0}
 
 /* SKILLS */
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
-.skill .tile{background:#fff;color:var(--black);aspect-ratio:16/10;display:grid;place-items:center;font-stretch:62%;font-weight:800;font-size:clamp(22px,2.6vw,32px);text-transform:uppercase;text-align:center;padding:10px;line-height:1}
+.skill .tile{background:#fff;color:var(--black);aspect-ratio:16/10;padding:6px;transition:box-shadow .25s}
+.skill:hover .tile{box-shadow:0 0 0 3px var(--accent)}
+.js #skills .skill{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;transition-delay:calc(var(--i) * 70ms)}
+.js #skills.seen .skill{opacity:1;transform:none}
+/* animated skill illustrations */
+.sk{display:block;width:100%;height:100%;fill:none;stroke:#0e1318;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;overflow:hidden}
+.sk .dim{stroke:#b9c0c6}.sk .dash{stroke-dasharray:3 3}
+.sk .acc{stroke:var(--accent)}.sk .accf{fill:var(--accent);stroke:none}.sk .inkf{fill:#0e1318;stroke:none}
+.sk text{fill:#0e1318;stroke:none;font-family:var(--mono);font-size:9px;font-weight:500}
+.sk text.sm{font-size:7.5px;fill:#5d6166}.sk text.acct{fill:#4f8794}.sk .okt{fill:#2f8f5b;font-weight:700}
+.sk .tick{stroke:var(--accent);stroke-width:2.4}
+.sk .node{fill:#fff}.sk .accn{stroke:var(--accent)}.sk .inkn{fill:#0e1318}
+.sk .s1{animation:s1 6s infinite}.sk .s2{animation:s2 6s infinite}.sk .s3{animation:s3 6s infinite}.sk .s4{animation:s4 6s infinite}.sk .s5{animation:s5 6s infinite}
+@keyframes s1{0%{opacity:0}4%,90%{opacity:1}96%,100%{opacity:0}}
+@keyframes s2{0%,14%{opacity:0}18%,90%{opacity:1}96%,100%{opacity:0}}
+@keyframes s3{0%,28%{opacity:0}32%,90%{opacity:1}96%,100%{opacity:0}}
+@keyframes s4{0%,42%{opacity:0}46%,90%{opacity:1}96%,100%{opacity:0}}
+@keyframes s5{0%,56%{opacity:0}60%,90%{opacity:1}96%,100%{opacity:0}}
+.amr .bot{transform-box:view-box;transform-origin:37px 67px;animation:amr 8s ease-in-out infinite}
+@keyframes amr{0%{transform:translateX(0) scaleX(1)}40%{transform:translateX(72px) scaleX(1)}48%{transform:translateX(72px) scaleX(-1)}88%{transform:translateX(0) scaleX(-1)}96%,100%{transform:translateX(0) scaleX(1)}}
+.amr .beam{fill:var(--accent);stroke:none;opacity:.35;animation:beam 1s ease-in-out infinite alternate}
+@keyframes beam{to{opacity:.12}}
+.api .req{animation:req 2.4s ease-in-out infinite}.api .res{animation:res 2.4s ease-in-out infinite 1.2s}
+@keyframes req{0%{transform:translateX(0);opacity:0}10%,85%{opacity:1}100%{transform:translateX(48px);opacity:0}}
+@keyframes res{0%{transform:translateX(0);opacity:0}10%,85%{opacity:1}100%{transform:translateX(-48px);opacity:0}}
+.gears .teeth{stroke-width:6}
+.gears .g1,.gears .g2{transform-box:fill-box;transform-origin:center}
+.gears .g1{animation:spin 8s linear infinite}.gears .g2{animation:spin 5.33s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.radar .sweep{transform-box:view-box;transform-origin:80px 50px;animation:spin 3s linear infinite}
+.radar .wedge{opacity:.3}
+.radar .blip{opacity:.15;animation:blip 3s infinite}
+.radar .b2{animation-delay:-1.4s}.radar .b3{animation-delay:-1s}.radar .b4{animation-delay:-2.1s}
+@keyframes blip{0%,4%{opacity:1}40%,100%{opacity:.15}}
+.emb .wave{animation:wave 1.2s linear infinite}.emb .wave2{animation:wave 1.2s linear infinite;stroke:#8a9198}
+@keyframes wave{to{transform:translateX(-24px)}}
+.emb .led{animation:led .8s steps(2,jump-none) infinite}
+@keyframes led{to{opacity:.2}}
+#skills:not(.play) .sk *{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.sk *{animation:none!important}.js #skills .skill{opacity:1;transform:none;transition:none}}
 .skill h3{font-size:15px;margin:12px 0 4px}
 .skill p{font-size:13.5px;color:var(--on-dark-muted);margin:0}
 
@@ -338,14 +378,56 @@ section{padding:clamp(56px,9vw,110px) 0}
   <div class="wrap">
     <h2 class="display">Technical Skills</h2>
     <div class="grid4">
-      <div class="skill"><div class="tile">Robotics &amp; AMR</div><h3>Robotics &amp; AMR</h3><p>AMR deployment, navigation, LiDAR systems, fleet management, ROS (foundational)</p></div>
-      <div class="skill"><div class="tile">Python</div><h3>Programming &amp; Tools</h3><p>Python, PLC programming, Arduino, Docker, Git</p></div>
-      <div class="skill"><div class="tile">Validation &amp; QA</div><h3>Validation &amp; QA</h3><p>Test case design, UAT, regression, endurance and jig testing, JIRA</p></div>
-      <div class="skill"><div class="tile">APIs</div><h3>API Testing</h3><p>REST and WebSocket API testing, MuleSoft</p></div>
-      <div class="skill"><div class="tile">Industry 4.0</div><h3>Industry 4.0</h3><p>IIoT, cloud platforms, fleet management software, autonomous systems</p></div>
-      <div class="skill"><div class="tile">Sensors</div><h3>Hardware</h3><p>LiDAR, IMU, encoders, motor controllers, BMS</p></div>
-      <div class="skill"><div class="tile">Embedded</div><h3>Embedded</h3><p>Arduino Nano, PLC basics, IoT sensors</p></div>
-      <div class="skill"><div class="tile">Git &amp; Docker</div><h3>DevOps basics</h3><p>Version control and containerised test environments</p></div>
+      <div class="skill" style="--i:0"><div class="tile"><svg class="sk amr" viewBox="0 0 160 100" aria-hidden="true">
+        <g class="dim"><rect x="14" y="14" width="40" height="26"/><line x1="14" y1="27" x2="54" y2="27"/><rect x="106" y="14" width="40" height="26"/><line x1="106" y1="27" x2="146" y2="27"/></g>
+        <line x1="8" y1="84" x2="152" y2="84"/>
+        <g class="bot"><path class="beam" d="M54 64 L86 50 L86 78 Z"/><rect x="20" y="58" width="34" height="18" rx="3"/><circle cx="29" cy="79" r="4"/><circle cx="45" cy="79" r="4"/><circle class="accf" cx="37" cy="55" r="3.5"/></g>
+      </svg></div><h3>Robotics &amp; AMR</h3><p>AMR deployment, navigation, LiDAR systems, fleet management, ROS (foundational)</p></div>
+      <div class="skill" style="--i:1"><div class="tile"><svg class="sk code" viewBox="0 0 160 100" aria-hidden="true">
+        <rect x="14" y="12" width="132" height="76" rx="4"/><line x1="14" y1="24" x2="146" y2="24"/>
+        <circle class="inkf" cx="21" cy="18" r="1.8"/><circle class="inkf" cx="27" cy="18" r="1.8"/><circle class="inkf" cx="33" cy="18" r="1.8"/>
+        <text class="s s1" x="22" y="39">def test_dock():</text>
+        <text class="s s2" x="32" y="52">bot.goto("A3")</text>
+        <text class="s s3" x="32" y="65">assert bot.docked</text>
+        <text class="s s4 okt" x="22" y="79">✓ 1 passed</text>
+      </svg></div><h3>Programming &amp; Tools</h3><p>Python, PLC programming, Arduino, Docker, Git</p></div>
+      <div class="skill" style="--i:2"><div class="tile"><svg class="sk qa" viewBox="0 0 160 100" aria-hidden="true">
+        <rect x="30" y="20" width="13" height="13" rx="2"/><line class="dim" x1="54" y1="26.5" x2="130" y2="26.5"/>
+        <rect x="30" y="43" width="13" height="13" rx="2"/><line class="dim" x1="54" y1="49.5" x2="118" y2="49.5"/>
+        <rect x="30" y="66" width="13" height="13" rx="2"/><line class="dim" x1="54" y1="72.5" x2="124" y2="72.5"/>
+        <path class="tick s s1" d="M33 27 l3 3 l6 -7"/><path class="tick s s2" d="M33 50 l3 3 l6 -7"/><path class="tick s s3" d="M33 73 l3 3 l6 -7"/>
+      </svg></div><h3>Validation &amp; QA</h3><p>Test case design, UAT, regression, endurance and jig testing, JIRA</p></div>
+      <div class="skill" style="--i:3"><div class="tile"><svg class="sk api" viewBox="0 0 160 100" aria-hidden="true">
+        <rect x="12" y="34" width="38" height="32" rx="3"/><text x="23" y="53">FM</text>
+        <rect x="110" y="34" width="38" height="32" rx="3"/><text x="118" y="53">AMR</text>
+        <line class="dim dash" x1="54" y1="44" x2="106" y2="44"/><line class="dim dash" x1="54" y1="56" x2="106" y2="56"/>
+        <text class="sm" x="68" y="36">REST</text><text class="sm" x="72" y="70">WS</text>
+        <circle class="accf req" cx="56" cy="44" r="3.5"/><circle class="inkf res" cx="104" cy="56" r="3.5"/>
+      </svg></div><h3>API Testing</h3><p>REST and WebSocket API testing, MuleSoft</p></div>
+      <div class="skill" style="--i:4"><div class="tile"><svg class="sk gears" viewBox="0 0 160 100" aria-hidden="true">
+        <g class="g1"><circle cx="62" cy="56" r="20" class="teeth" stroke-dasharray="5.24 5.23"/><circle cx="62" cy="56" r="15"/><circle cx="62" cy="56" r="4"/></g>
+        <g class="g2"><circle cx="91" cy="35" r="13" class="teeth" stroke-dasharray="5.1 5.11"/><circle cx="91" cy="35" r="8.5"/><circle cx="91" cy="35" r="2.5"/></g>
+        <g class="acc wifi"><path class="s s1" d="M118 70 a6 6 0 0 1 8 0"/><path class="s s2" d="M114 66 a12 12 0 0 1 16 0"/><path class="s s3" d="M110 62 a18 18 0 0 1 24 0"/><circle class="accf" cx="122" cy="74" r="2"/></g>
+      </svg></div><h3>Industry 4.0</h3><p>IIoT, cloud platforms, fleet management software, autonomous systems</p></div>
+      <div class="skill" style="--i:5"><div class="tile"><svg class="sk radar" viewBox="0 0 160 100" aria-hidden="true">
+        <g class="dim"><circle cx="80" cy="50" r="14"/><circle cx="80" cy="50" r="28"/><circle cx="80" cy="50" r="40"/><line x1="36" y1="50" x2="124" y2="50"/><line x1="80" y1="6" x2="80" y2="94"/></g>
+        <g class="sweep"><path class="accf wedge" d="M80 50 L120 50 A40 40 0 0 0 112.8 27.1 Z"/><line class="acc" x1="80" y1="50" x2="120" y2="50"/></g>
+        <circle class="inkf blip b1" cx="104" cy="36" r="2.4"/><circle class="inkf blip b2" cx="62" cy="70" r="2.4"/><circle class="inkf blip b3" cx="96" cy="76" r="2.4"/><circle class="inkf blip b4" cx="58" cy="32" r="2.4"/>
+      </svg></div><h3>Hardware</h3><p>LiDAR, IMU, encoders, motor controllers, BMS</p></div>
+      <div class="skill" style="--i:6"><div class="tile"><svg class="sk emb" viewBox="0 0 160 100" aria-hidden="true">
+        <defs><clipPath id="sk-wave-clip"><rect x="66" y="20" width="84" height="60"/></clipPath></defs>
+        <rect x="18" y="30" width="40" height="40" rx="3"/><text x="27" y="53">MCU</text><circle class="accf led" cx="51" cy="37" r="2.2"/>
+        <path d="M24 30v-6M32 30v-6M40 30v-6M48 30v-6M24 70v6M32 70v6M40 70v6M48 70v6M18 40h-6M18 50h-6M18 60h-6M58 40h8M58 60h8"/>
+        <g clip-path="url(#sk-wave-clip)"><path class="acc wave" d="M42 48h12v-14h12v14h12v-14h12v14h12v-14h12v14h12v-14h12v14h12v-14h12"/><path class="wave2" d="M42 66h6v-6h18v6h6v-6h18v6h6v-6h18v6h6v-6h18v6h6v-6h18v6h6v-6h18v6h6v-6h18"/></g>
+      </svg></div><h3>Embedded</h3><p>Arduino Nano, PLC basics, IoT sensors</p></div>
+      <div class="skill" style="--i:7"><div class="tile"><svg class="sk git" viewBox="0 0 160 100" aria-hidden="true">
+        <line x1="16" y1="64" x2="146" y2="64"/>
+        <path class="acc s s2" d="M52 64 C64 64 62 38 76 38 L96 38"/><path class="acc s s4" d="M96 38 C110 38 108 64 120 64"/>
+        <circle class="node s s1" cx="26" cy="64" r="4.5"/><circle class="node s s1" cx="52" cy="64" r="4.5"/>
+        <circle class="node accn s s3" cx="76" cy="38" r="4.5"/><circle class="node accn s s3" cx="96" cy="38" r="4.5"/>
+        <circle class="node inkn s s5" cx="120" cy="64" r="5.5"/>
+        <text class="sm" x="18" y="82">main</text><text class="sm acct" x="70" y="26">feature</text>
+      </svg></div><h3>DevOps basics</h3><p>Version control and containerised test environments</p></div>
     </div>
   </div>
 </section>
@@ -406,6 +488,12 @@ section{padding:clamp(56px,9vw,110px) 0}
   </defs>
 </svg>
 <script>
+/* Skills: reveal tiles on first view; run their animations only while visible */
+(() => {
+  const sec = document.getElementById('skills'); if (!sec) return;
+  if (!('IntersectionObserver' in window)) { sec.classList.add('seen', 'play'); return; }
+  new IntersectionObserver(e => { const v = e[e.length - 1].isIntersecting; if (v) sec.classList.add('seen'); sec.classList.toggle('play', v); }, { threshold: .15 }).observe(sec);
+})();
 /* Live project demos: gesture-controlled robot and solar mower. Pause when off screen; static frame for reduced motion. */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
