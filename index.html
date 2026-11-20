@@ -194,22 +194,26 @@ section{padding:clamp(56px,9vw,110px) 0}
 .lang span{font-size:13px;color:var(--on-dark-muted)}
 .contact h2.display{font-size:clamp(48px,9vw,110px)}
 .contact h2.talk{color:#ff4d4f}
-.contact .rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}
-.contact .rows a{display:flex;justify-content:space-between;gap:12px;padding:18px 0;border-bottom:1px solid #444;text-decoration:none;font-size:clamp(15px,1.8vw,19px);overflow-wrap:anywhere}
-.contact .rows a span{color:var(--on-dark-muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em;flex:none}
-.contact .rows a:hover{color:var(--accent)}
-.contact .rows a{position:relative;transition:color .2s,padding-left .3s ease}
-.contact .rows a::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
-.contact .rows a:hover,.contact .rows a:focus-visible{padding-left:12px}
-.contact .rows a:hover::after,.contact .rows a:focus-visible::after{transform:scaleX(1)}
-.contact .rows a span::before{content:"\2197";display:inline-block;margin-right:8px;opacity:0;transform:translate(-8px,6px);transition:opacity .3s,transform .3s}
-.contact .rows a:hover span::before,.contact .rows a:focus-visible span::before{opacity:1;transform:none}
+.contact .rows{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.contact .rows a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 10px 20px;border:1px solid #444;border-radius:14px;background:rgba(255,255,255,.02);text-decoration:none;transition:border-color .25s,background .25s,transform .25s}
+.contact .rows a:hover,.contact .rows a:focus-visible{border-color:var(--accent);background:rgba(114,164,177,.08);transform:translateY(-4px)}
+.contact .emo-w{display:inline-block;transition:transform .25s}
+.contact .rows a:hover .emo-w,.contact .rows a:focus-visible .emo-w{transform:scale(1.2)}
+.contact .emo{display:inline-block;font-size:clamp(40px,5vw,54px);line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.contact .lbl{color:var(--on-dark-muted);font-size:12px;text-transform:uppercase;letter-spacing:.1em;transition:color .25s}
+.contact .rows a:hover .lbl,.contact .rows a:focus-visible .lbl{color:var(--accent)}
+.e-mail{animation:float 2.6s ease-in-out infinite}
+.e-phone{animation:ring 2.4s ease-in-out infinite;transform-origin:50% 60%}
+.e-in{animation:bounce 2s ease-in-out infinite}
+.e-gh{animation:sway 3s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes float{50%{transform:translateY(-6px) rotate(-5deg)}}
+@keyframes ring{0%,55%,90%,100%{transform:rotate(0)}60%,70%,80%{transform:rotate(-14deg)}65%,75%,85%{transform:rotate(14deg)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-10px)}60%{transform:translateY(0) scale(1.08,.92)}75%{transform:none}}
+@keyframes sway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
 .js .contact .rows a{opacity:0}
 .js .contact .rows.seen a{animation:rowIn .6s ease forwards;animation-delay:calc(var(--i) * 110ms)}
-.js .contact .rows.seen a::after{animation:lineSweep 1s ease;animation-delay:calc(var(--i) * 110ms + .2s)}
-@keyframes rowIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes lineSweep{0%{transform:scaleX(0);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}50.1%{transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
-@media (prefers-reduced-motion:reduce){.js .contact .rows a{opacity:1}.js .contact .rows.seen a,.js .contact .rows.seen a::after{animation:none}.contact .rows a,.contact .rows a::after,.contact .rows a span::before{transition:none}}
+@keyframes rowIn{from{opacity:0;translate:0 18px}to{opacity:1;translate:none}}
+@media (prefers-reduced-motion:reduce){.js .contact .rows a{opacity:1}.js .contact .rows.seen a,.contact .emo{animation:none}.contact .rows a,.contact .emo-w{transition:none}}
 .note{margin-top:36px;color:var(--on-dark-muted);font-size:14px}
 .cv-btn{display:inline-block;margin-top:28px;background:var(--on-dark);color:var(--black);padding:12px 22px;text-decoration:none;font-weight:700;text-transform:uppercase;font-size:14px;letter-spacing:.05em}
 .cv-btn:hover{background:var(--accent)}
@@ -220,7 +224,7 @@ section{padding:clamp(56px,9vw,110px) 0}
   .feed{justify-self:start;max-width:300px;margin-left:8px}
   .grid4{grid-template-columns:1fr 1fr}
   .langs{grid-template-columns:repeat(2,1fr)}
-  .contact .rows{grid-template-columns:1fr}
+  .contact .rows{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:760px){.grid3{grid-template-columns:1fr}}
 @media (max-width:560px){
@@ -480,10 +484,10 @@ section{padding:clamp(56px,9vw,110px) 0}
     </div>
     <h2 class="display talk">Let's talk</h2>
     <div class="rows" id="contact-rows">
-      <a style="--i:0" href="mailto:Vettattusamsaji@gmail.com">Vettattusamsaji@gmail.com <span>Email</span></a>
-      <a style="--i:1" href="tel:+917909219980">+91 79092 19980 <span>Phone</span></a>
-      <a style="--i:2" href="https://linkedin.com/in/sam-saji-aa7492270">linkedin.com/in/sam-saji-aa7492270 <span>LinkedIn</span></a>
-      <a style="--i:3" href="https://github.com/samsaji0127">github.com/samsaji0127 <span>GitHub</span></a>
+      <a style="--i:0" href="mailto:Vettattusamsaji@gmail.com" aria-label="Email Sam Saji" title="Email"><span class="emo-w"><span class="emo e-mail" aria-hidden="true">📧</span></span><span class="lbl">Email</span></a>
+      <a style="--i:1" href="tel:+917909219980" aria-label="Call Sam Saji" title="Phone"><span class="emo-w"><span class="emo e-phone" aria-hidden="true">📱</span></span><span class="lbl">Phone</span></a>
+      <a style="--i:2" href="https://linkedin.com/in/sam-saji-aa7492270" target="_blank" rel="noopener" aria-label="Sam Saji on LinkedIn" title="LinkedIn"><span class="emo-w"><span class="emo e-in" aria-hidden="true">💼</span></span><span class="lbl">LinkedIn</span></a>
+      <a style="--i:3" href="https://github.com/samsaji0127" target="_blank" rel="noopener" aria-label="Sam Saji on GitHub" title="GitHub"><span class="emo-w"><span class="emo e-gh" aria-hidden="true">🐙</span></span><span class="lbl">GitHub</span></a>
     </div>
     <a class="cv-btn" href="SamsajiCV.pdf" download>Download CV (PDF)</a>
     <p class="note">Based in Bengaluru, India</p>
