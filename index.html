@@ -17,11 +17,12 @@
 <meta name="twitter:image" content="https://samsaji0127.github.io/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,100,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,100,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 :root{
   --light:#edf0f2; --dark:#2b2b2b; --black:#0e1318; --ink:#111; --muted:#5d6166;
   --on-dark:#f2f2f2; --on-dark-muted:#bdbdbd; --rule:#9a9a9a; --accent:#72a4b1;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   --f:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
@@ -36,24 +37,41 @@ section{padding:clamp(56px,9vw,110px) 0}
 .dark{background:var(--dark);color:var(--on-dark)}
 .black{background:var(--black);color:var(--on-dark)}
 
-/* HERO: solid word behind the photo, outlined copy in front */
-.hero{position:relative;min-height:min(100vh,860px);overflow:hidden;background:var(--light);display:flex;flex-direction:column;justify-content:space-between;padding:28px 0}
+/* HERO: technical "sensor feed" layout on a blueprint grid */
+.hero{position:relative;overflow:hidden;background:var(--black);color:var(--on-dark);padding:24px 0 clamp(40px,6vw,72px);
+  background-image:linear-gradient(rgba(114,164,177,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(114,164,177,.09) 1px,transparent 1px);
+  background-size:40px 40px}
 .hero .wrap{width:100%}
-.hero .bar{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:15px}
-.hero nav{display:flex;gap:20px;flex-wrap:wrap}
-.hero nav a{text-decoration:none;font-weight:500}
-.hero nav a:hover{text-decoration:underline}
-.word{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;
-  font-size:clamp(84px,21vw,300px);font-stretch:62%;font-weight:800;line-height:1;letter-spacing:-.01em}
-.word.solid{z-index:1;color:var(--black)}
-.word.outline{z-index:3;color:transparent;-webkit-text-stroke:2px var(--light)}
-.hero img{position:absolute;z-index:2;left:50%;bottom:0;transform:translateX(-50%);height:96%;max-width:none;
-  filter:grayscale(1) contrast(1.08);mix-blend-mode:multiply}
-.hero .foot{position:relative;z-index:4;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.hero .name{font-size:clamp(18px,2.2vw,24px);font-weight:600;background:var(--light);padding:2px 8px;margin-left:-8px}
+.hero .bar{display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.12)}
+.hero .bar .sys{color:var(--accent)}
+.hero nav{display:flex;gap:22px;flex-wrap:wrap}
+.hero nav a{text-decoration:none;color:var(--on-dark-muted)}
+.hero nav a:hover{color:#fff}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:clamp(36px,6vw,72px)}
+.kicker{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(56px,9vw,124px);font-stretch:62%;font-weight:800;line-height:.88;text-transform:uppercase;letter-spacing:-.01em}
+.hero h1 .ol{color:transparent;-webkit-text-stroke:1.5px var(--on-dark)}
+.hero .role{font-size:clamp(16px,1.6vw,19px);color:var(--on-dark-muted);margin:20px 0 28px;max-width:520px}
+.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid rgba(255,255,255,.16);max-width:540px;margin-bottom:28px}
+.readout div{padding:12px 14px;border-right:1px solid rgba(255,255,255,.16)}
+.readout div:last-child{border-right:0}
+.readout b{display:block;font-stretch:62%;font-weight:800;font-size:32px;line-height:1}
+.readout span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--on-dark-muted)}
+.feed{position:relative;justify-self:end;width:100%;max-width:360px}
+.feed .frame{position:relative;aspect-ratio:4/5;overflow:hidden;background:#dfe3e6;border:1px solid rgba(255,255,255,.2)}
+.feed img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;filter:grayscale(1) contrast(1.1) brightness(.9);display:block}
+.feed .frame::after{content:"";position:absolute;left:0;right:0;height:2px;background:rgba(114,164,177,.85);box-shadow:0 0 12px rgba(114,164,177,.9);top:0;animation:scan 4s linear infinite}
+@keyframes scan{to{top:100%}}
+@media (prefers-reduced-motion:reduce){.feed .frame::after{animation:none;display:none}}
+.feed .c{position:absolute;width:22px;height:22px;border:2px solid var(--accent)}
+.feed .c1{top:-8px;left:-8px;border-right:0;border-bottom:0}.feed .c2{top:-8px;right:-8px;border-left:0;border-bottom:0}
+.feed .c3{bottom:-8px;left:-8px;border-right:0;border-top:0}.feed .c4{bottom:-8px;right:-8px;border-left:0;border-top:0}
+.feed .lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--on-dark-muted);margin-top:16px}
+.feed .lbl i{font-style:normal;color:var(--accent)}
+.feed .lbl i::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#3ddc84;margin-right:6px;vertical-align:1px}
 .icons{display:flex;gap:10px}
-.icons a{width:40px;height:40px;display:grid;place-items:center;background:var(--black);color:#fff;border-radius:50%}
-.icons a:hover{background:var(--accent)}
+.icons a{width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);color:#fff}
+.icons a:hover{background:var(--accent);border-color:var(--accent)}
 .icons svg{width:18px;height:18px}
 
 /* SUMMARY */
@@ -124,14 +142,14 @@ section{padding:clamp(56px,9vw,110px) 0}
 
 @media (max-width:860px){
   .edu,.exp{grid-template-columns:1fr}
+  .hero-grid{grid-template-columns:1fr}
+  .feed{justify-self:start;max-width:300px;margin-left:8px}
   .grid4{grid-template-columns:1fr 1fr}
   .langs{grid-template-columns:repeat(2,1fr)}
   .contact .rows{grid-template-columns:1fr}
 }
 @media (max-width:560px){
   .hero nav{display:none}
-  .hero{min-height:620px}
-  .hero img{height:78%}
   .grid3{grid-template-columns:1fr}
   .card h3{min-height:0}
   .entry .date{float:none;display:block;margin:0 0 2px}
@@ -142,22 +160,33 @@ section{padding:clamp(56px,9vw,110px) 0}
 
 <header class="hero" id="top">
   <div class="wrap bar">
-    <span>Validation Engineer</span>
+    <span><span class="sys">&#9632; SYS</span> / Portfolio</span>
     <nav>
       <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
     </nav>
   </div>
-  <div class="word solid" aria-hidden="true">PORTFOLIO</div>
-  <img src="photo.jpg" alt="Sam Saji in a dark suit and white shirt">
-  <div class="word outline" aria-hidden="true">PORTFOLIO</div>
-  <div class="wrap foot">
-    <h1 class="name">Sam Saji</h1>
-    <div class="icons">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">// Robotics Validation Engineer · ATI Robotics</div>
+      <h1>Sam<br><span class="ol">Saji</span></h1>
+      <p class="role">I test autonomous mobile robots, covering hardware, firmware, software, navigation and safety, so they work reliably in real warehouses.</p>
+      <div class="readout">
+        <div><b>3</b><span>Years in AMR</span></div>
+        <div><b>10+</b><span>Client sites</span></div>
+        <div><b>100+ h</b><span>Endurance runs</span></div>
+      </div>
+      <div class="icons">
       <a href="tel:+917909219980" aria-label="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
       <a href="https://linkedin.com/in/sam-saji-aa7492270" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
       <a href="https://github.com/samsaji0127" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg></a>
       <a href="mailto:Vettattusamsaji@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7 10-7"/></svg></a>
     </div>
+    </div>
+    <figure class="feed" style="margin:0">
+      <div class="frame"><img src="photo.jpg" alt="Sam Saji in a dark suit and white shirt"></div>
+      <span class="c c1"></span><span class="c c2"></span><span class="c c3"></span><span class="c c4"></span>
+      <figcaption class="lbl"><span>CAM_01 · Bengaluru, IN</span><i>Online</i></figcaption>
+    </figure>
   </div>
 </header>
 
