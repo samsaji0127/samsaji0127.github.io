@@ -198,6 +198,18 @@ section{padding:clamp(56px,9vw,110px) 0}
 .contact .rows a{display:flex;justify-content:space-between;gap:12px;padding:18px 0;border-bottom:1px solid #444;text-decoration:none;font-size:clamp(15px,1.8vw,19px);overflow-wrap:anywhere}
 .contact .rows a span{color:var(--on-dark-muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em;flex:none}
 .contact .rows a:hover{color:var(--accent)}
+.contact .rows a{position:relative;transition:color .2s,padding-left .3s ease}
+.contact .rows a::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
+.contact .rows a:hover,.contact .rows a:focus-visible{padding-left:12px}
+.contact .rows a:hover::after,.contact .rows a:focus-visible::after{transform:scaleX(1)}
+.contact .rows a span::before{content:"\2197";display:inline-block;margin-right:8px;opacity:0;transform:translate(-8px,6px);transition:opacity .3s,transform .3s}
+.contact .rows a:hover span::before,.contact .rows a:focus-visible span::before{opacity:1;transform:none}
+.js .contact .rows a{opacity:0}
+.js .contact .rows.seen a{animation:rowIn .6s ease forwards;animation-delay:calc(var(--i) * 110ms)}
+.js .contact .rows.seen a::after{animation:lineSweep 1s ease;animation-delay:calc(var(--i) * 110ms + .2s)}
+@keyframes rowIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes lineSweep{0%{transform:scaleX(0);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}50.1%{transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
+@media (prefers-reduced-motion:reduce){.js .contact .rows a{opacity:1}.js .contact .rows.seen a,.js .contact .rows.seen a::after{animation:none}.contact .rows a,.contact .rows a::after,.contact .rows a span::before{transition:none}}
 .note{margin-top:36px;color:var(--on-dark-muted);font-size:14px}
 .cv-btn{display:inline-block;margin-top:28px;background:var(--on-dark);color:var(--black);padding:12px 22px;text-decoration:none;font-weight:700;text-transform:uppercase;font-size:14px;letter-spacing:.05em}
 .cv-btn:hover{background:var(--accent)}
@@ -467,11 +479,11 @@ section{padding:clamp(56px,9vw,110px) 0}
       <div class="lang"><b>German</b><span>A2 · speaking &amp; reading, learning</span></div>
     </div>
     <h2 class="display talk">Let's talk</h2>
-    <div class="rows">
-      <a href="mailto:Vettattusamsaji@gmail.com">Vettattusamsaji@gmail.com <span>Email</span></a>
-      <a href="tel:+917909219980">+91 79092 19980 <span>Phone</span></a>
-      <a href="https://linkedin.com/in/sam-saji-aa7492270">linkedin.com/in/sam-saji-aa7492270 <span>LinkedIn</span></a>
-      <a href="https://github.com/samsaji0127">github.com/samsaji0127 <span>GitHub</span></a>
+    <div class="rows" id="contact-rows">
+      <a style="--i:0" href="mailto:Vettattusamsaji@gmail.com">Vettattusamsaji@gmail.com <span>Email</span></a>
+      <a style="--i:1" href="tel:+917909219980">+91 79092 19980 <span>Phone</span></a>
+      <a style="--i:2" href="https://linkedin.com/in/sam-saji-aa7492270">linkedin.com/in/sam-saji-aa7492270 <span>LinkedIn</span></a>
+      <a style="--i:3" href="https://github.com/samsaji0127">github.com/samsaji0127 <span>GitHub</span></a>
     </div>
     <a class="cv-btn" href="SamsajiCV.pdf" download>Download CV (PDF)</a>
     <p class="note">Based in Bengaluru, India</p>
@@ -503,6 +515,13 @@ section{padding:clamp(56px,9vw,110px) 0}
   const sec = document.getElementById('skills'); if (!sec) return;
   if (!('IntersectionObserver' in window)) { sec.classList.add('seen', 'play'); return; }
   new IntersectionObserver(e => { const v = e[e.length - 1].isIntersecting; if (v) sec.classList.add('seen'); sec.classList.toggle('play', v); }, { threshold: .15 }).observe(sec);
+})();
+/* Contact rows: slide in with a light sweep the first time they are seen */
+(() => {
+  const rows = document.getElementById('contact-rows'); if (!rows) return;
+  if (!('IntersectionObserver' in window)) { rows.classList.add('seen'); return; }
+  const io = new IntersectionObserver(e => { if (e[e.length - 1].isIntersecting) { rows.classList.add('seen'); io.disconnect(); } }, { threshold: .25 });
+  io.observe(rows);
 })();
 /* Live project demos: gesture-controlled robot and solar mower. Pause when off screen; static frame for reduced motion. */
 (() => {
