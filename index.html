@@ -66,8 +66,6 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
 .feed img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;filter:grayscale(1) contrast(1.1) brightness(.9);display:block}
 .feed .shatter{position:absolute;inset:0;width:100%;height:100%;display:block}
 .feed .frame.live img{visibility:hidden}
-.feed .frame::after{content:"";position:absolute;left:0;right:0;height:2px;background:rgba(114,164,177,.85);box-shadow:0 0 12px rgba(114,164,177,.9);top:0;animation:scan 4s linear infinite}
-@keyframes scan{to{top:100%}}
 .feed .c{position:absolute;width:22px;height:22px;border:2px solid var(--accent)}
 .feed .c1{top:-8px;left:-8px;border-right:0;border-bottom:0}.feed .c2{top:-8px;right:-8px;border-left:0;border-bottom:0}
 .feed .c3{bottom:-8px;left:-8px;border-right:0;border-top:0}.feed .c4{bottom:-8px;right:-8px;border-left:0;border-top:0}
@@ -253,7 +251,7 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
     <figure class="feed" style="margin:0">
       <div class="frame"><img src="photo.jpg" alt="Sam Saji in a dark suit and white shirt"></div>
       <span class="c c1"></span><span class="c c2"></span><span class="c c3"></span><span class="c c4"></span>
-      <figcaption class="lbl"><span>CAM_01 · Bengaluru, IN</span><i>Online</i></figcaption>
+      <figcaption class="lbl"><span>Bengaluru, IN</span><i>Online</i></figcaption>
     </figure>
   </div>
 </header>
@@ -778,7 +776,7 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
   if (!img) return;
   const cv = document.createElement('canvas'); cv.className = 'shatter'; cv.setAttribute('aria-hidden', 'true');
   const ctx = cv.getContext('2d'), src = document.createElement('canvas'), sctx = src.getContext('2d', { willReadFrequently: true });
-  const T = 7, G = 1500, HOLD = 3.2;            // tile px, gravity px/s², intact pause s
+  const T = 4, G = 3200, HOLD = 3.2;            // tile px, gravity px/s², intact pause s
   let W = 0, H = 0, dpr = 1, tiles = [], fallEnd = 0, fillEnd = 0, t0 = 0, raf = 0, visible = true;
 
   function build() {
@@ -804,12 +802,12 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
     for (let ry = 0; ry < rows; ry++) for (let cx = 0; cx < cols; cx++) {
       const up = 1 - ry / rows, x = cx * T, y = ry * T;
       // drain: bottom rows let go first, with a rippling wave across columns
-      const rel = up * 1.7 + Math.random() * .35 + .18 * (1 + Math.sin(cx * .45 + ry * .08));
+      const rel = up * 1.1 + Math.random() * .25 + .18 * (1 + Math.sin(cx * .45 + ry * .08));
       // refill: pieces rain in from above and settle bottom-up, like a glass filling
       const land = up * 1.9 + Math.random() * .3 + .1 * (1 + Math.sin(cx * .3));
       const drop = Math.sqrt(2 * (y + T + 40) / G);
       tiles.push({ x, y, rel, land, drop, ph: Math.random() * 6.283, sw: 6 + Math.random() * 14 });
-      fallEnd = Math.max(fallEnd, rel + 1.1); fillEnd = Math.max(fillEnd, land);
+      fallEnd = Math.max(fallEnd, rel + .7); fillEnd = Math.max(fillEnd, land);
     }
     return true;
   }
@@ -827,7 +825,7 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
         const s = t - k.rel;
         if (s <= 0) { ctx.drawImage(src, k.x * dpr, k.y * dpr, S, S, k.x, k.y, T, T); continue; }
         const y = k.y + .5 * G * s * s; if (y > H) continue;
-        const x = k.x + Math.sin(k.ph + s * 7) * k.sw * s, a = Math.max(0, 1 - s / 1.1), z = T * (1 - s * .35);
+        const x = k.x + Math.sin(k.ph + s * 7) * k.sw * s, a = Math.max(0, 1 - s / .7), z = T * (1 - s * .5);
         ctx.globalAlpha = a; ctx.drawImage(src, k.x * dpr, k.y * dpr, S, S, x, y, z, z); ctx.globalAlpha = 1;
       }
       return;
