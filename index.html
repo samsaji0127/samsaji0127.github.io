@@ -129,6 +129,9 @@ section{padding:clamp(56px,9vw,110px) 0}
 .entry-logo{display:flex;gap:18px;align-items:flex-start}
 .entry-logo>div{flex:1;min-width:0}
 .edu-logo{flex:none;width:64px;height:64px;background:#fff;border-radius:10px;padding:6px;object-fit:contain}
+.edu-icon{display:grid;place-items:center;padding:7px}
+.edu-icon svg{width:100%;height:100%;fill:none;stroke:#0e1318;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.edu-icon .fill-acc{fill:var(--accent);stroke:none}.edu-icon .fill-ink{fill:#fff;stroke:none}
 
 /* SKILLS */
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
@@ -274,17 +277,23 @@ section{padding:clamp(56px,9vw,110px) 0}
           <p>First Class · CGPA 7.54 / 10 · Passed April 2023</p>
         </div>
       </div>
-      <div class="entry">
-        <span class="date">2017 – 2019</span>
-        <h3>Higher Secondary Education (Plus Two), Science</h3>
-        <div class="where">Board of Higher Secondary Examinations, Government of Kerala</div>
-        <p>Physics, Chemistry, Mathematics, Computer Science · Passed March 2019</p>
+      <div class="entry entry-logo">
+        <span class="edu-logo edu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M19 8h10M21 8v12L11 38a3 3 0 0 0 2.6 4.5h20.8A3 3 0 0 0 37 38L27 20V8"/><path class="fill-acc" d="M15.5 31h17l3.8 7a2 2 0 0 1-1.8 3H13.5a2 2 0 0 1-1.8-3z"/><circle cx="22" cy="35" r="1.6" class="fill-ink"/><circle cx="27" cy="37.5" r="1.2" class="fill-ink"/></svg></span>
+        <div>
+          <span class="date">2017 – 2019</span>
+          <h3>Higher Secondary Education (Plus Two), Science</h3>
+          <div class="where">Board of Higher Secondary Examinations, Government of Kerala</div>
+          <p>Physics, Chemistry, Mathematics, Computer Science · Passed March 2019</p>
+        </div>
       </div>
-      <div class="entry">
-        <span class="date">2017</span>
-        <h3>Secondary School Leaving Certificate (SSLC)</h3>
-        <div class="where">St. Thomas High School, Thottumukkam, Kerala · Kerala Board of Public Examinations</div>
-        <p>A+ in English and Physics · Passed March 2017</p>
+      <div class="entry entry-logo">
+        <span class="edu-logo edu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 40V22l16-10 16 10v18"/><path d="M5 24l19-12 19 12"/><path d="M20 40v-9h8v9"/><path d="M5 40h38"/><path d="M24 12V4"/><path class="fill-acc" d="M24 4h8l-2 2.5 2 2.5h-8z"/><rect x="12" y="26" width="5" height="5"/><rect x="31" y="26" width="5" height="5"/></svg></span>
+        <div>
+          <span class="date">2017</span>
+          <h3>Secondary School Leaving Certificate (SSLC)</h3>
+          <div class="where">St. Thomas High School, Thottumukkam, Kerala · Kerala Board of Public Examinations</div>
+          <p>A+ in English and Physics · Passed March 2017</p>
+        </div>
       </div>
       <div class="entry">
         <h3>Currently learning</h3>
