@@ -702,7 +702,10 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
   if (!img) return;
   const cv = document.createElement('canvas'); cv.className = 'shatter'; cv.setAttribute('aria-hidden', 'true');
   const ctx = cv.getContext('2d'), src = document.createElement('canvas'), sctx = src.getContext('2d', { willReadFrequently: true });
-  const T = 4, G = 900, HOLD = 3.2;            // tile px, gravity px/s², intact pause s
+  const G = 900, HOLD = 3.2;                    // gravity px/s², intact pause s
+  // tile px: small squares on desktop, bigger on phones so each frame draws far fewer pieces
+  let T = matchMedia('(pointer:coarse)').matches || innerWidth < 700 ? 8 : 4;
+  let slow = 0, frames = 0, prev = 0;
   let W = 0, H = 0, dpr = 1, tiles = [], fallEnd = 0, fillEnd = 0, t0 = 0, raf = 0, visible = true;
 
   function build() {
@@ -738,13 +741,24 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
     return true;
   }
 
+  function stop() {                             // device can't keep up: show the still photo
+    cancelAnimationFrame(raf); raf = 0; visible = false; cv.remove(); frame.classList.remove('live');
+  }
+
   function draw(now) {
     raf = visible ? requestAnimationFrame(draw) : 0;
     if (!t0) t0 = now;
+    // watch frame time while pieces move; enlarge squares, or give up, if too slow
+    const dt = prev ? now - prev : 16; prev = now;
+    if (dt < 250) { frames++; if (dt > 40) slow++; }
+    if (frames >= 45) {
+      if (slow > 15) { if (T >= 12) return stop(); T += 4; build(); t0 = now; }
+      frames = slow = 0;
+    }
     const cycle = HOLD + fallEnd + .4 + fillEnd + .05;
     let t = ((now - t0) / 1000) % cycle;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
-    if (t < HOLD) { ctx.drawImage(src, 0, 0, W, H); return; }
+    if (t < HOLD) { frames = slow = 0; ctx.drawImage(src, 0, 0, W, H); return; }
     t -= HOLD; const S = T * dpr;
     if (t < fallEnd + .4) {                       // draining
       for (const k of tiles) {
@@ -771,7 +785,7 @@ section+section{border-top:1px solid rgba(255,255,255,.08)}
     frame.insertBefore(cv, img.nextSibling); frame.classList.add('live');
     if (!raf) raf = requestAnimationFrame(draw);
     if ('IntersectionObserver' in window) new IntersectionObserver(e => {
-      visible = e[e.length - 1].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(draw);
+      visible = e[e.length - 1].isIntersecting; prev = 0; if (visible && !raf) raf = requestAnimationFrame(draw);
     }).observe(frame);
     let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 150); });
   }
